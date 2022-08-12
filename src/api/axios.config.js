@@ -26,22 +26,25 @@ class Request {
     constructor() {
         // this.baseUrl = BASE_URL;
     }
-
-    send= function (options) {
-        instance(options)
-            .then(response => {
-                options.callback({
-                    type: "success",
-                    message: '请求成功',
-                    data: response.data
-                })
-            })
-            .catch(error => {
-                options.callback({
-                    type: "error",
-                    message: '请求数据发生错误'
-                })
-            });
+    //callback模式
+    // send= function (options) {
+    //     instance(options)
+    //         .then(response => {
+    //             options.callback(response)
+    //         })
+    //         .catch(error => {
+    //             options.callback(error)
+    //         });
+    // }
+    //promise 模式
+    send=function (options){
+       return new Promise((resolve, reject) => {
+           instance(options).then(response=>{
+               resolve(response.data)
+           }).catch(error=>{
+               reject(error)
+           })
+       })
     }
 
     get= function (config) {

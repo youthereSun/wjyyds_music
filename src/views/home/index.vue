@@ -13,11 +13,15 @@ export default {
 import {onMounted} from "vue";
 import {searchByKeyword} from '../../api/api'
 onMounted(()=>{
-  const keywords='海阔天空'
-  searchByKeyword({keywords},(res)=>{
-    debugger
-  })
+  getSearchRes()
+
 })
+
+const getSearchRes=async ()=>{
+  const keywords='海阔天空'
+  let res=await searchByKeyword({keywords})
+  debugger
+}
 </script>
 
 <style scoped>

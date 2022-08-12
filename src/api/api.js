@@ -1,9 +1,8 @@
 import request from './axios.config'
 
-export function searchByKeyword(data,callback){
+export function searchByKeyword(data){
     const {keywords} =data
-    request.get({
-        url:`search?keywords=${keywords}`,
-        callback
+    return request.send({
+        url:`search?keywords=${keywords}`
     })
 }
