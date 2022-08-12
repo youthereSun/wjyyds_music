@@ -9,7 +9,8 @@ export default defineConfig({
                 javascriptEnabled: true,
                 //定义less全局变量
                 globalVars: {
-                    mainColor: "red",
+                    mainColor: "#009688",
+                    mainGray:'#c7c9c9'
                 }
             },
         },

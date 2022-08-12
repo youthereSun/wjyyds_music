@@ -18,6 +18,7 @@ export default {
   position: absolute;
   top: 80px;
   right: 0;
+  overflow-y: scroll;
 }
 
 </style>

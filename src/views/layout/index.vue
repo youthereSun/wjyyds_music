@@ -40,7 +40,6 @@ const appBackground = ref('#00BCD4')
     transform: translate(-50%,-50%);
     width: 80%;
     height: 80%;
-    border: 1px slategray solid;
     border-radius: 20px;
     overflow: hidden;
   }
