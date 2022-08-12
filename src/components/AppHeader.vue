@@ -1,8 +1,8 @@
 <template>
   <div class="app-header">
     <div class="header-navigator">
-      <left-outlined class="header-navigator-icon" />
-      <right-outlined  class="header-navigator-icon"/>
+      <left-outlined @click="router.back()" class="header-navigator-icon" />
+      <right-outlined @click="router.forward()" class="header-navigator-icon"/>
     </div>
     <div class="header-search">
       <a-input class="header-search-input" placeholder="输入搜索" v-model="keyword" />
@@ -22,7 +22,8 @@ export default {
 <script setup>
 import {ref} from 'vue'
 import { LeftOutlined, RightOutlined,RobotOutlined } from '@ant-design/icons-vue';
-
+import {useRouter} from 'vue-router'
+const router=useRouter()
 const keyword=ref('')
 
 </script>

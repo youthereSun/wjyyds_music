@@ -28,3 +28,9 @@ export function  getPlayListTrackAll(id){
         url: `/playlist/track/all?id=${id}`
     })
 }
+///check/music?id=33894312 检查当前歌曲是否可以播放
+export function checkSongValidity(id){
+    return request.send({
+        url: `/check/music?id=${id}`
+    })
+}
