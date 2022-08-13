@@ -1,7 +1,7 @@
 <template>
   <div class="app-album-detail">
     <AlbumCover @handlePlayAll="addAlbumToList" :coverInfo="state.albumInfo"/>
-    <div class="app-album-song-list">
+    <div class="app-album-song-list" ref="songListContainer">
       <song-card @click="startPlay(item)" :info="item" v-for="item in computedData.showList" :key="item.id"/>
     </div>
     <a-pagination style="margin-bottom: 20px" align="center" :defaultPageSize="state.defaultPageSize" v-model:current="state.current" :total="state.playList.length" show-less-items/>
@@ -15,8 +15,9 @@ export default {
 </script>
 <script setup>
 import {useRoute} from 'vue-router'
-import {onMounted, reactive, getCurrentInstance, computed} from "vue";
+import {onMounted, reactive, getCurrentInstance, computed,ref} from "vue";
 import {getPlayListDetail, getPlayListTrackAll, checkSongValidity} from "../../api/api";
+import animateLoading from "../../components/AnimateLoading";
 import SongCard from "./components/SongCard.vue";
 import AlbumCover from "./components/AlbumCover.vue";
 import {useStore} from 'vuex'
@@ -24,6 +25,7 @@ import {useStore} from 'vuex'
 const route = useRoute()
 const store = useStore()
 const {proxy} = getCurrentInstance()
+const songListContainer=ref(null)
 
 const state = reactive({
   playList: [],
@@ -51,7 +53,9 @@ const getDetail = async (id) => {
 }
 
 const getTrackAll = async (id) => {
+  animateLoading.show(songListContainer.value)
   let res = await getPlayListTrackAll(id)
+  animateLoading.hide()
   state.playList = res.songs
 
 }
