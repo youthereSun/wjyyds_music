@@ -22,16 +22,17 @@ const state = reactive({
 })
 
 onMounted(() => {
-  getHot()
+  getPersonal()
 })
 
-const getHot = async () => {
+const getPersonal = async () => {
   const res = await getPersonalized()
   const {result} = res
   state.personalized = result
 
 }
 
+//进入歌单详情页面，封面和歌曲列表
 const goAlbumDetailPage=(id)=>{
   router.push({
     path:'/albumDetail',
