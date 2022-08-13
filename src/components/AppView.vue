@@ -1,7 +1,13 @@
 <template>
- <div class="app-view">
-   <router-view />
- </div>
+  <div class="app-view">
+    <router-view #default="{route,Component}">
+      <transition enter-active-class="animate__animated animate__fadeIn">
+        <keep-alive :include="['home']">
+          <component :is="Component"/>
+        </keep-alive>
+      </transition>
+    </router-view>
+  </div>
 </template>
 
 <script>
@@ -11,7 +17,7 @@ export default {
 </script>
 
 <style scoped lang="less">
-.app-view{
+.app-view {
   height: calc(100% - 80px - 80px);
   width: 80%;
   background: white;

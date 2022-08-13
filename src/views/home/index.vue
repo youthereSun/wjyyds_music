@@ -8,11 +8,11 @@
 
 <script>
 export default {
-  name: "index",
+  name: "home",
 }
 </script>
 <script setup>
-import {onMounted, reactive,ref} from "vue";
+import {onMounted, reactive,ref,onDeactivated,onActivated} from "vue";
 import {getPersonalized} from '../../api/api'
 import {useRouter} from 'vue-router'
 import Personalized from "./components/Personalized.vue";
@@ -26,7 +26,12 @@ const state = reactive({
 onMounted(() => {
   getPersonal()
 })
-
+onActivated(()=>{
+  console.log('回到了keep-alive组件')
+})
+onDeactivated(()=>{
+  console.log('从keep-alive组件离开了')
+})
 const getPersonal = async () => {
   personalizedModule.value.showLoading()
   const res = await getPersonalized()

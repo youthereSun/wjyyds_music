@@ -10,7 +10,7 @@
 
 <script>
 export default {
-  name: "index",
+  name: "albumDetail",
 }
 </script>
 <script setup>
