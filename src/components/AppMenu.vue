@@ -18,7 +18,7 @@ import {CloudOutlined,MinusOutlined} from '@ant-design/icons-vue';
 const menuItem = [
   {
     id: 1,
-    title: 'Hi，wjyyds',
+    title: 'Hi，Emoer',
     children: [
       {
         id: 1,
@@ -27,32 +27,32 @@ const menuItem = [
       }
     ]
   },
-  {
-    id: 2,
-    title: 'Explore',
-    children: [
-      {
-        id: 1,
-        name: '乐库',
-        path: '/',
-      },
-      {
-        id: 2,
-        name: '视频',
-        path: '/',
-      },
-      {
-        id: 3,
-        name: '电台',
-        path: '/',
-      },
-      {
-        id: 4,
-        name: '歌单',
-        path: '/',
-      },
-    ]
-  }
+  // {
+  //   id: 2,
+  //   title: 'Explore',
+  //   children: [
+  //     {
+  //       id: 1,
+  //       name: '乐库',
+  //       path: '/',
+  //     },
+  //     {
+  //       id: 2,
+  //       name: '视频',
+  //       path: '/',
+  //     },
+  //     {
+  //       id: 3,
+  //       name: '电台',
+  //       path: '/',
+  //     },
+  //     {
+  //       id: 4,
+  //       name: '歌单',
+  //       path: '/',
+  //     },
+  //   ]
+  // }
 ]
 
 
