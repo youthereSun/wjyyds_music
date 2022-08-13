@@ -44,9 +44,8 @@ onMounted(()=>{
     let list =store.state.playerStore.playlist
     //找到刚播放完的音乐在list中位置
     let index= list.findIndex(v=>v.id==current.id)
-    //如果是最后一首，停止播放//默认播放第一首
+    //如果是最后一首，停止播放
     if(index==list.length-1){
-      // audioRef.value.pause()
       let payload={
         key:'isPlay',
         value:false

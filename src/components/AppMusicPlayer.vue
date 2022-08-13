@@ -1,7 +1,7 @@
 <template>
   <div class="app-music-player">
     <div class="song-pic">
-      <img v-if="!$store.state.playerStore.playingMusic.musicCover" src="../assets/images/play.png">
+      <img v-if="!$store.state.playerStore.playingMusic.musicCover"  style="border-radius: 10px" src="../assets/images/none.png">
       <img v-else :src="$store.state.playerStore.playingMusic.musicCover">
 <!--      <div class="app-music-info">-->
 <!--        <p>{{$store.state.playerStore.playingMusic.musicName}}</p>-->
@@ -44,9 +44,7 @@ const {proxy} = getCurrentInstance()
 
 const showHistory=ref(false)
 
-const hideHistory=()=>{
-  showHistory.value=false
-}
+
 const continuePlay = () => {
   if(!store.state.playerStore.playingMusic.musicName) return
   const payload = {
@@ -57,6 +55,7 @@ const continuePlay = () => {
   proxy.$audioPlayer.play()
 }
 
+//暂停
 const pauseMusic = () => {
   const payload = {
     key: 'isPlay',
@@ -66,6 +65,7 @@ const pauseMusic = () => {
   proxy.$audioPlayer.pause()
 }
 
+//上一首
 const playNext=()=>{
   let current = store.state.playerStore.playingMusic
   let list =store.state.playerStore.playlist
@@ -73,7 +73,7 @@ const playNext=()=>{
   //找到刚播放完的音乐在list中位置
   let index= list.findIndex(v=>v.id==current.id)
   let next
-  //如果是最后一首，默认播放第一首
+  //如果是最后一首，重新播放最后一首
   if(index==list.length-1){
     // audioRef.value.pause()
     next=current
@@ -85,10 +85,16 @@ const playNext=()=>{
     value:next
   }
   store.commit('playerStore/updateState',payload)
+  const payload1 = {
+    key: 'isPlay',
+    value: true
+  }
+  store.commit('playerStore/updateState', payload1)
   let src=`https://music.163.com/song/media/outer/url?id=${next.id}.mp3`
   proxy.$audioPlayer.play(src)
 }
 
+//下一首
 const playPrv=()=>{
   let current = store.state.playerStore.playingMusic
   let list =store.state.playerStore.playlist
@@ -107,6 +113,11 @@ const playPrv=()=>{
     key:'playingMusic',
     value:prv
   }
+  const payload1 = {
+    key: 'isPlay',
+    value: true
+  }
+  store.commit('playerStore/updateState', payload1)
   store.commit('playerStore/updateState',payload)
   let src=`https://music.163.com/song/media/outer/url?id=${prv.id}.mp3`
   proxy.$audioPlayer.play(src)

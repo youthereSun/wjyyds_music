@@ -1,6 +1,6 @@
 <template>
   <div class="app-album-detail">
-    <AlbumCover :coverInfo="state.albumInfo" />
+    <AlbumCover @handlePlayAll="addAlbumToList" :coverInfo="state.albumInfo"  />
     <div class="app-album-song-list" >
       <song-card @click="startPlay(item)" :info="item" v-for="item in state.playList" />
     </div>
@@ -43,6 +43,38 @@ const getTrackAll=async (id)=>{
   let res=await getPlayListTrackAll(id)
   state.playList=res.songs
 
+}
+
+
+//将当前歌单加入playList
+const addAlbumToList=()=>{
+  if(state.playList.length==0) return
+  let newList=[]
+  state.playList.forEach(item=>{
+    const {id} =item
+    const musicName = item?.al?.name
+    const musicCover=item?.al?.picUrl
+    const singer=item?.ar[0]?.name
+    newList.push({id,musicCover,musicName,singer})
+  })
+  let payload={
+    key:'playlist',
+    value:newList
+  }
+  store.commit('playerStore/updateState',payload)
+
+  let payload1={
+    key:'isPlay',
+    value:true
+  }
+  store.commit('playerStore/updateState',payload1)
+  let payload2={
+    key:'playingMusic',
+    value:newList[0]
+  }
+  store.commit('playerStore/updateState',payload2)
+  let src=`https://music.163.com/song/media/outer/url?id=${newList[0].id}.mp3`
+  proxy.$audioPlayer.play(src)
 }
 
 const startPlay=async (item)=>{

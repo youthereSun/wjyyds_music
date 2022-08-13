@@ -1,5 +1,6 @@
 <template>
     <div class="app-album-cover">
+      <img class="app-play-album-all" @click="playCurrentAlbum" src="../../../assets/images/play.png">
       <img class="app-album-cover-img" :src="coverInfo.coverImgUrl">
       <div class="app-album-cover-dec">
         <div class="app-album-cover-name">{{coverInfo.name}}</div>
@@ -20,6 +21,11 @@ defineProps({
     default:()=>{}
   }
 })
+
+const emits=defineEmits(['handlePlayAll'])
+const playCurrentAlbum=()=> {
+  emits('handlePlayAll')
+}
 </script>
 
 <style scoped lang="less">
@@ -28,6 +34,15 @@ defineProps({
   display: flex;
   margin-bottom: 20px;
   padding: 10px;
+  position: relative;
+
+  .app-play-album-all{
+    position:absolute;
+    width:40px;
+    height: 40px;
+    left: 20px;
+    bottom: 0;
+  }
   .app-album-cover-img{
     width: 200px;
     height: 200px;
@@ -37,7 +52,7 @@ defineProps({
     position:relative;
     height: 200px;
     flex: 1;
-    background: @mainGray;
+    background: #72a8a8;
     padding:20px;
     .app-album-cover-name{
       font-weight: bold;
