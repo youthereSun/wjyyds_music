@@ -81,8 +81,7 @@ const playAll=()=>{
       value: newList[0]
     }
     store.commit('playerStore/updateState', payload2)
-    let src = `https://music.163.com/song/media/outer/url?id=${newList[0].id}.mp3`
-    proxy.$audioPlayer.play(src)
+    proxy.$audioPlayer.play(newList[0].id)
 
 }
 
@@ -106,8 +105,7 @@ const startPlay = async (item) => {
     store.commit('playerStore/addToPlaylist', music)
 
     proxy.$audioPlayer.pause()
-    let src = `https://music.163.com/song/media/outer/url?id=${id}.mp3`
-    proxy.$audioPlayer.play(src)
+    proxy.$audioPlayer.play(id)
   }else {
     console.log('Error：',res.message)
   }

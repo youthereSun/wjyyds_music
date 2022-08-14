@@ -39,8 +39,7 @@ const playHistoryMusic=(item)=>{
     value: true
   }
   store.commit('playerStore/updateState', payload1)
-  let src=`https://music.163.com/song/media/outer/url?id=${item.id}.mp3`
-  proxy.$audioPlayer.play(src)
+  proxy.$audioPlayer.play(item.id)
 
 }
 </script>

@@ -35,3 +35,10 @@ export function checkSongValidity(id){
         needStatusCode:true
     })
 }
+
+//通过id获取url地址
+export function  getSongUrl(id){
+    return request.send({
+        url: `/song/url?id=${id}`,
+    })
+}

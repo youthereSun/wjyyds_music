@@ -90,8 +90,7 @@ const playNext=()=>{
     value: true
   }
   store.commit('playerStore/updateState', payload1)
-  let src=`https://music.163.com/song/media/outer/url?id=${next.id}.mp3`
-  proxy.$audioPlayer.play(src)
+  proxy.$audioPlayer.play(next.id)
 }
 
 //下一首
@@ -119,8 +118,7 @@ const playPrv=()=>{
   }
   store.commit('playerStore/updateState', payload1)
   store.commit('playerStore/updateState',payload)
-  let src=`https://music.163.com/song/media/outer/url?id=${prv.id}.mp3`
-  proxy.$audioPlayer.play(src)
+  proxy.$audioPlayer.play(prv.id)
 }
 
 </script>

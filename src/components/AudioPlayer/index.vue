@@ -13,7 +13,7 @@ export default {
 <script setup>
 import {onMounted, ref} from 'vue'
 import {useStore} from 'vuex'
-import {checkSongValidity} from "../../api/api";
+import {checkSongValidity, getSongUrl} from "../../api/api";
 const audioRef=ref(null)
 const sourceRef=ref(null)
 //const store = useStore()
@@ -25,8 +25,10 @@ const props =defineProps({
 })
 const {store} =props
 
-const playMusic=(src)=>{
-  if(src){
+const playMusic=async (id)=>{
+  if(id){
+    let res=await getSongUrl(id)
+    let src=res.data[0].url
     sourceRef.value.src=src
     audioRef.value.load()
   }
@@ -41,8 +43,6 @@ onMounted(()=>{
 
 
   audioRef.value.addEventListener("ended",async function fn() {   //当播放完一首歌曲时也会触发
-    //先自动暂停
-    //audioRef.value.pause()
     let current = store.state.playerStore.playingMusic
     let list =store.state.playerStore.playlist
     //找到刚播放完的音乐在list中位置
@@ -56,20 +56,13 @@ onMounted(()=>{
       store.commit('playerStore/updateState',payload)
     }else{
       let next=list[index+1]
-
-
       let payload={
         key:'playingMusic',
         value:next
       }
       store.commit('playerStore/updateState',payload)
-      const res = await checkSongValidity(next.id)
-      if(res.success){
-      let src=`https://music.163.com/song/media/outer/url?id=${next.id}.mp3`
-      playMusic(src)
-      }else {
-        fn()
-      }
+
+      playMusic(next.id)
     }
   });
 })
