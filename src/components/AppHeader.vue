@@ -8,7 +8,7 @@
       <a-input class="header-search-input" placeholder="输入搜索" @pressEnter="onSubmitKeyword" :value="keyword" @change="onKeywordChange"/>
     </div>
     <div class="header-login-block">
-      <frown-outlined class="header-unlogin"/>
+      <frown-outlined @click="showAppInfo" class="header-unlogin"/>
     </div>
 
   </div>
@@ -20,11 +20,12 @@ export default {
 }
 </script>
 <script setup>
-import {ref,onMounted} from 'vue'
+import {ref,onMounted,getCurrentInstance} from 'vue'
 import {LeftOutlined,FrownOutlined, RightOutlined, RobotOutlined} from '@ant-design/icons-vue';
 import {useRouter,useRoute} from 'vue-router'
 const route =useRoute()
 const router = useRouter()
+const {proxy} =getCurrentInstance()
 defineProps({
   keyword: {
     type: String,
@@ -43,6 +44,18 @@ const onSubmitKeyword=(e)=>{
 emits('handleSubmitSearch')
 }
 
+
+const showAppInfo=()=>{
+  proxy.$toastMessage.show({
+    content:`code by [wjyyds],design by [Jsenny]`,
+    autoClose:false,
+    color:'#00BCD4',
+    onClose:()=>{
+      console.warn('code by [wjyyds],design by [Jsenny]')
+    }
+  })
+
+}
 </script>
 
 <style scoped lang="less">

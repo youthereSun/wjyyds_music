@@ -3,6 +3,7 @@ import vue from '@vitejs/plugin-vue'
 
 export default defineConfig({
     plugins: [vue()],
+    envPrefix:'APP_',
     css: {
         preprocessorOptions: {
             less: {

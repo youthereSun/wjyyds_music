@@ -1,12 +1,13 @@
 <template>
   <div class="app-music-player">
     <div class="song-pic">
-      <img v-if="!$store.state.playerStore.playingMusic.musicCover"  style="border-radius: 10px" src="../assets/images/none.png">
-      <img v-else :src="$store.state.playerStore.playingMusic.musicCover">
-<!--      <div class="app-music-info">-->
-<!--        <p>{{$store.state.playerStore.playingMusic.musicName}}</p>-->
-<!--       <p> {{$store.state.playerStore.playingMusic.singer}}</p>-->
-<!--      </div>-->
+      <img v-if="!$store.state.playerStore.playingMusic.musicCover" style="border-radius: 10px"
+           src="../assets/images/none.png">
+      <img @click="toastMusicInfo" v-else :src="$store.state.playerStore.playingMusic.musicCover">
+      <!--      <div class="app-music-info">-->
+      <!--        <p>{{$store.state.playerStore.playingMusic.musicName}}</p>-->
+      <!--       <p> {{$store.state.playerStore.playingMusic.singer}}</p>-->
+      <!--      </div>-->
     </div>
     <div class="music-control-container">
       <backward-outlined @click="playPrv" class="control-button-icon"/>
@@ -18,11 +19,11 @@
       <forward-outlined @click="playNext" class="control-button-icon"/>
     </div>
     <div>
-      <a-popover v-model:visible="showHistory"  trigger="click">
+      <a-popover v-model:visible="showHistory" trigger="click">
         <template #content>
           <history-list/>
         </template>
-        <clock-circle-outlined  class="app-music-playlist"/>
+        <clock-circle-outlined class="app-music-playlist"/>
       </a-popover>
     </div>
   </div>
@@ -42,11 +43,23 @@ import {BackwardOutlined, ForwardOutlined, ClockCircleOutlined} from '@ant-desig
 const store = useStore()
 const {proxy} = getCurrentInstance()
 
-const showHistory=ref(false)
+const showHistory = ref(false)
+const showMusicInfo = ref(false)
 
+const toastMusicInfo=()=>{
+  const {musicName,singer}= store.state.playerStore.playingMusic
+  proxy.$toastMessage.show({
+    content:`[${musicName}],sing by:[${singer}]`,
+    duration:5000,
+    autoClose:true,
+    onClose:()=>{
+      //console.log('callback:autoClosed')
+    }
+  })
+}
 
 const continuePlay = () => {
-  if(!store.state.playerStore.playingMusic.musicName) return
+  if (!store.state.playerStore.playingMusic.musicName) return
   const payload = {
     key: 'isPlay',
     value: true
@@ -66,25 +79,25 @@ const pauseMusic = () => {
 }
 
 //上一首
-const playNext=()=>{
+const playNext = () => {
   let current = store.state.playerStore.playingMusic
-  let list =store.state.playerStore.playlist
-  if(list.length==0)return
+  let list = store.state.playerStore.playlist
+  if (list.length == 0) return
   //找到刚播放完的音乐在list中位置
-  let index= list.findIndex(v=>v.id==current.id)
+  let index = list.findIndex(v => v.id == current.id)
   let next
   //如果是最后一首，重新播放最后一首
-  if(index==list.length-1){
+  if (index == list.length - 1) {
     // audioRef.value.pause()
-    next=current
-  }else{
-    next=list[index+1]
+    next = current
+  } else {
+    next = list[index + 1]
   }
-  let payload={
-    key:'playingMusic',
-    value:next
+  let payload = {
+    key: 'playingMusic',
+    value: next
   }
-  store.commit('playerStore/updateState',payload)
+  store.commit('playerStore/updateState', payload)
   const payload1 = {
     key: 'isPlay',
     value: true
@@ -94,30 +107,30 @@ const playNext=()=>{
 }
 
 //下一首
-const playPrv=()=>{
+const playPrv = () => {
   let current = store.state.playerStore.playingMusic
-  let list =store.state.playerStore.playlist
-  if(list.length==0)return
+  let list = store.state.playerStore.playlist
+  if (list.length == 0) return
   //找到刚播放完的音乐在list中位置
-  let index= list.findIndex(v=>v.id==current.id)
+  let index = list.findIndex(v => v.id == current.id)
   let prv
   //如果是最后一首，默认播放第一首
-  if(index==0){
+  if (index == 0) {
     // audioRef.value.pause()
-    prv=list[0]
-  }else{
-    prv=list[index-1]
+    prv = list[0]
+  } else {
+    prv = list[index - 1]
   }
-  let payload={
-    key:'playingMusic',
-    value:prv
+  let payload = {
+    key: 'playingMusic',
+    value: prv
   }
   const payload1 = {
     key: 'isPlay',
     value: true
   }
   store.commit('playerStore/updateState', payload1)
-  store.commit('playerStore/updateState',payload)
+  store.commit('playerStore/updateState', payload)
   proxy.$audioPlayer.play(prv.id)
 }
 
@@ -141,10 +154,11 @@ const playPrv=()=>{
     display: flex;
     align-items: end;
     justify-content: space-between;
-    .app-music-info{
-      flex:1;
+
+    .app-music-info {
+      flex: 1;
       font-size: 12px;
-      color:slategray;
+      color: slategray;
     }
 
     img {
@@ -162,12 +176,12 @@ const playPrv=()=>{
 
   .control-button-icon {
     font-size: 30px;
-    color:@mainColor;
+    color: @mainColor;
   }
 
   .app-music-playlist {
     font-size: 20px;
-    color:@mainColor;
+    color: @mainColor;
   }
 
   .control-button {
