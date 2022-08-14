@@ -20,10 +20,10 @@ export default {
 }
 </script>
 <script setup>
-import {ref} from 'vue'
+import {ref,onMounted} from 'vue'
 import {LeftOutlined,FrownOutlined, RightOutlined, RobotOutlined} from '@ant-design/icons-vue';
-import {useRouter} from 'vue-router'
-
+import {useRouter,useRoute} from 'vue-router'
+const route =useRoute()
 const router = useRouter()
 defineProps({
   keyword: {
@@ -31,6 +31,7 @@ defineProps({
     default: ''
   }
 })
+
 
 const emits = defineEmits(['update:keyword','handleSubmitSearch'])
 

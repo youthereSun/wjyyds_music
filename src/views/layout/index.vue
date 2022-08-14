@@ -15,16 +15,23 @@ export default {
 }
 </script>
 <script setup>
-import {ref} from 'vue'
-import {useRouter} from 'vue-router'
+import {nextTick, onMounted, ref} from 'vue'
+import {useRouter,useRoute} from 'vue-router'
 import AppHeader from "../../components/AppHeader.vue";
 import AppMenu from "../../components/AppMenu.vue";
 import AppMusicPlayer from "../../components/AppMusicPlayer.vue";
 import AppView from "../../components/AppView.vue";
-
+const route=useRoute()
 const router=useRouter()
 const appBackground = ref('#00BCD4')
 const keyword=ref('')
+
+onMounted(()=>{
+  setTimeout(()=>{
+    const {keyword:k} =route.query
+    keyword.value=k
+  },1000)
+})
 const goSearchPage=()=>{
   if(!keyword.value){return}
   if(router.currentRoute.value.path==='/searchResult'){
