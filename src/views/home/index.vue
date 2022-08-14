@@ -1,8 +1,6 @@
 <template>
   <div id="app-home">
-    <personalized ref="personalizedModule" @handleClickAlbum="goAlbumDetailPage" :albums="state.personalized" />
-
-
+    <personalized ref="personalizedModule" @handleClickAlbum="goAlbumDetailPage" @handleReload="getPersonal" :albums="state.personalized" />
   </div>
 </template>
 

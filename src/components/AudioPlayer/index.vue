@@ -13,6 +13,7 @@ export default {
 <script setup>
 import {onMounted, ref} from 'vue'
 import {useStore} from 'vuex'
+import {checkSongValidity} from "../../api/api";
 const audioRef=ref(null)
 const sourceRef=ref(null)
 //const store = useStore()
@@ -37,7 +38,9 @@ const pauseMusic=()=>{
 }
 
 onMounted(()=>{
-  audioRef.value.addEventListener("ended", function () {   //当播放完一首歌曲时也会触发
+
+
+  audioRef.value.addEventListener("ended",async function fn() {   //当播放完一首歌曲时也会触发
     //先自动暂停
     //audioRef.value.pause()
     let current = store.state.playerStore.playingMusic
@@ -53,13 +56,20 @@ onMounted(()=>{
       store.commit('playerStore/updateState',payload)
     }else{
       let next=list[index+1]
+
+
       let payload={
         key:'playingMusic',
         value:next
       }
       store.commit('playerStore/updateState',payload)
+      const res = await checkSongValidity(next.id)
+      if(res.success){
       let src=`https://music.163.com/song/media/outer/url?id=${next.id}.mp3`
       playMusic(src)
+      }else {
+        fn()
+      }
     }
   });
 })

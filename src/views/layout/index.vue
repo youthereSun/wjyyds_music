@@ -1,8 +1,8 @@
 <template>
   <div id="app-layout">
     <div class="app-warpper">
-      <app-header/>
-      <app-menu/>
+      <app-header v-model:keyword="keyword" @handleSubmitSearch="goSearchPage" />
+      <app-menu @handleRouterChange="(path)=>$router.push({path})"/>
       <app-view/>
       <app-music-player/>
     </div>
@@ -16,12 +16,34 @@ export default {
 </script>
 <script setup>
 import {ref} from 'vue'
+import {useRouter} from 'vue-router'
 import AppHeader from "../../components/AppHeader.vue";
 import AppMenu from "../../components/AppMenu.vue";
 import AppMusicPlayer from "../../components/AppMusicPlayer.vue";
 import AppView from "../../components/AppView.vue";
 
+const router=useRouter()
 const appBackground = ref('#00BCD4')
+const keyword=ref('')
+const goSearchPage=()=>{
+  if(!keyword.value){return}
+  if(router.currentRoute.value.path==='/searchResult'){
+    router.replace({
+      path:'/searchResult',
+      query:{
+        keyword:keyword.value
+      }
+    })
+    return
+  }
+  router.push({
+    path:'/searchResult',
+    query:{
+      keyword:keyword.value
+    }
+  })
+}
+
 
 </script>
 

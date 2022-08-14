@@ -2,7 +2,7 @@
   <div class="app-menu">
     <div class="app-menu-item" :key="item.id" v-for="item in menuItem">
       <div class="app-menu-title">{{ item.title }}</div>
-      <div class="app-menu-link" :key="child.id" v-for="child in item.children">{{ child.name }}</div>
+      <div class="app-menu-link" @click="emits('handleRouterChange',child.path)" :key="child.id" v-for="child in item.children">{{ child.name }}</div>
     </div>
   </div>
 </template>
@@ -22,38 +22,40 @@ const menuItem = [
     children: [
       {
         id: 1,
-        name: '主页',
-        path: '/',
+        name: '个人推荐',
+        path: '/home',
       }
     ]
   },
-  // {
-  //   id: 2,
-  //   title: 'Explore',
-  //   children: [
-  //     {
-  //       id: 1,
-  //       name: '乐库',
-  //       path: '/',
-  //     },
-  //     {
-  //       id: 2,
-  //       name: '视频',
-  //       path: '/',
-  //     },
-  //     {
-  //       id: 3,
-  //       name: '电台',
-  //       path: '/',
-  //     },
-  //     {
-  //       id: 4,
-  //       name: '歌单',
-  //       path: '/',
-  //     },
-  //   ]
-  // }
+  {
+    id: 2,
+    title: 'Explore',
+    // children: [
+    //   {
+    //     id: 1,
+    //     name: '乐库',
+    //     path: '/',
+    //   },
+    //   {
+    //     id: 2,
+    //     name: '视频',
+    //     path: '/',
+    //   },
+    //   {
+    //     id: 3,
+    //     name: '电台',
+    //     path: '/',
+    //   },
+    //   {
+    //     id: 4,
+    //     name: '歌单',
+    //     path: '/',
+    //   },
+    // ]
+  }
 ]
+
+const emits = defineEmits(['handleRouterChange'])
 
 
 </script>

@@ -4,7 +4,7 @@
       <img class="app-album-cover-img" :src="coverInfo.coverImgUrl">
       <div class="app-album-cover-dec">
         <div class="app-album-cover-name">{{coverInfo.name}}</div>
-        <div class="app-album-cover-bottom">{{coverInfo.description}}</div>
+        <div class="app-album-cover-bottom">{{coverInfo.description?.substr(0,300)}}</div>
       </div>
     </div>
 </template>
@@ -52,15 +52,18 @@ const playCurrentAlbum=()=> {
     position:relative;
     height: 200px;
     flex: 1;
-    background: #72a8a8;
+    background: #cceaf1;
     padding:20px;
+
     .app-album-cover-name{
       font-weight: bold;
       font-size: 20px;
+      color: #616161;;
     }
     .app-album-cover-bottom{
       position:absolute;
       bottom:20px;
+      color: @mainGray;
     }
   }
 }

@@ -6,6 +6,7 @@ const animateLoading={
     show:(el)=>{
         vNode=createApp(AnimateLoading)
         div=document.createElement('div')
+        div.id='app-animate-loading-warp'
         el.appendChild(div)
         vNode.mount(div)
     },

@@ -1,6 +1,11 @@
 <template>
   <div class="module-personalized" ref="refIns">
-    <album-title>个人推荐</album-title>
+    <album-title>
+      <template #text> 个人推荐</template>
+      <template #action>
+        <redo-outlined  @click="reloadPersonalized"/>
+      </template>
+    </album-title>
     <div class="album-cards">
       <album-card @click="getDetailById(item.id)" :albumInfo="item" :key="item.id" v-for="item in albums"/>
     </div>
@@ -16,6 +21,7 @@ export default {
 <script setup>
 import AlbumCard from "../../../components/AlbumCard.vue";
 import {ref} from 'vue'
+import { RedoOutlined } from '@ant-design/icons-vue';
 import animateLoading from "../../../components/AnimateLoading";
 defineProps({
   albums: {
@@ -24,8 +30,12 @@ defineProps({
   }
 })
 const refIns=ref(null)
-const emits = defineEmits(['handleClickAlbum'])
+const emits = defineEmits(['handleClickAlbum','handleReload'])
 
+
+const reloadPersonalized=()=>{
+  emits('handleReload')
+}
 const getDetailById=(id)=>{
   emits('handleClickAlbum',id)
 }

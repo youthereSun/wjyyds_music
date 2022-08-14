@@ -1,9 +1,9 @@
 import request from './axios.config'
 
-export function searchByKeyword(data) {
-    const {keywords} = data
+//搜索歌曲
+export function searchByKeyword(keyword) {
     return request.send({
-        url: `search?keywords=${keywords}`
+        url: `cloudsearch?keywords=${keyword}&type=1`
     })
 }
 
@@ -31,6 +31,7 @@ export function  getPlayListTrackAll(id){
 ///check/music?id=33894312 检查当前歌曲是否可以播放
 export function checkSongValidity(id){
     return request.send({
-        url: `/check/music?id=${id}`
+        url: `/check/music?id=${id}`,
+        needStatusCode:true
     })
 }

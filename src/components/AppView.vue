@@ -1,11 +1,11 @@
 <template>
   <div class="app-view">
     <router-view #default="{route,Component}">
-      <transition enter-active-class="animate__animated animate__fadeIn">
+<!--      <transition enter-active-class="animate__animated animate__fadeIn">-->
         <keep-alive :include="['home']">
           <component :is="Component"/>
         </keep-alive>
-      </transition>
+<!--      </transition>-->
     </router-view>
   </div>
 </template>

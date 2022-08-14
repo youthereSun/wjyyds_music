@@ -1,6 +1,7 @@
 <template>
     <p class="app-album-title">
-      <slot />
+      <slot name="text" />
+      <slot name="action" />
     </p>
 </template>
 
@@ -12,10 +13,12 @@ export default {
 
 <style scoped lang="less">
 .app-album-title{
-  padding:10px 15px;
+  padding:20px 30px;
   font-size: 18px;
   font-weight: bold;
   color:@mainColor;
+  display:flex;
+  justify-content:space-between;
 }
 
 </style>
