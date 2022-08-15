@@ -39,27 +39,39 @@ import {ref, getCurrentInstance} from 'vue'
 import {useStore} from 'vuex'
 import HistoryList from "./HistoryList.vue";
 import {BackwardOutlined, ForwardOutlined, ClockCircleOutlined} from '@ant-design/icons-vue';
+import {getSongUrl} from "../api/api";
 
 const store = useStore()
 const {proxy} = getCurrentInstance()
 
 const showHistory = ref(false)
-const showMusicInfo = ref(false)
 
 const toastMusicInfo=()=>{
-  const {musicName,singer}= store.state.playerStore.playingMusic
+  const {musicName,singer,id}= store.state.playerStore.playingMusic
   proxy.$toastMessage.show({
     content:`[${musicName}],sing by:[${singer}]`,
     duration:5000,
     autoClose:true,
     onClose:()=>{
+      getSongUrl(id).then(res=>{
+        console.log('下载地址:',res.data[0].url)
+      })
       //console.log('callback:autoClosed')
     }
   })
 }
 
 const continuePlay = () => {
-  if (!store.state.playerStore.playingMusic.musicName) return
+  if (!store.state.playerStore.playingMusic.musicName) {
+    proxy.$toastMessage.show({
+      content:`播放列表还没有歌曲，先选个歌`,
+      duration:5000,
+      color:'#607D8B',
+      autoClose:true,
+      onClose:()=>{}
+    })
+    return
+  }
   const payload = {
     key: 'isPlay',
     value: true
@@ -82,7 +94,16 @@ const pauseMusic = () => {
 const playNext = () => {
   let current = store.state.playerStore.playingMusic
   let list = store.state.playerStore.playlist
-  if (list.length == 0) return
+  if (list.length == 0) {
+    proxy.$toastMessage.show({
+      content:`播放列表还没有歌曲，先选个歌`,
+      duration:5000,
+      color:'#607D8B',
+      autoClose:true,
+      onClose:()=>{}
+    })
+    return
+  }
   //找到刚播放完的音乐在list中位置
   let index = list.findIndex(v => v.id == current.id)
   let next
@@ -110,7 +131,16 @@ const playNext = () => {
 const playPrv = () => {
   let current = store.state.playerStore.playingMusic
   let list = store.state.playerStore.playlist
-  if (list.length == 0) return
+  if (list.length == 0) {
+    proxy.$toastMessage.show({
+      content:`播放列表还没有歌曲，先选个歌`,
+      duration:5000,
+      color:'#607D8B',
+      autoClose:true,
+      onClose:()=>{}
+    })
+    return
+  }
   //找到刚播放完的音乐在list中位置
   let index = list.findIndex(v => v.id == current.id)
   let prv

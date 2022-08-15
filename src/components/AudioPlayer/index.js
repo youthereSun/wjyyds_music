@@ -9,14 +9,13 @@ export default {
         //通过在外部把store传进去就可以了
         const vNode = createVNode(AudioPlayer, {store})
         let audioDom = document.createElement('div')
-        //const {APP_SHOW_AUDIO_PLAYER} =import.meta.env
-        // if(!APP_SHOW_AUDIO_PLAYER){
-        audioDom.style.display = 'none'
-        //}
+        const {APP_ENABLE_DEBUGGER} = import.meta.env
+        if (APP_ENABLE_DEBUGGER==='false') {
+            audioDom.style.display = 'none'
+        }
 
         document.body.appendChild(audioDom)
         render(vNode, audioDom)
-        console.log(vNode)
         app.config.globalProperties.$audioPlayer = {
             play: (id) => {
                 vNode.component.exposed.playMusic(id)

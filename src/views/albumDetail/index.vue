@@ -4,7 +4,7 @@
     <div class="app-album-song-list" ref="songListContainer">
       <song-card @click="startPlay(item)" :info="item" v-for="item in computedData.showList" :key="item.id"/>
     </div>
-    <a-pagination style="margin-bottom: 20px" align="center" :defaultPageSize="state.defaultPageSize" v-model:current="state.current" :total="state.playList.length" show-less-items/>
+    <a-pagination simple hideOnSinglePage style="margin-bottom: 20px" align="center" :defaultPageSize="state.defaultPageSize" v-model:current="state.current" :total="state.playList.length" />
   </div>
 </template>
 

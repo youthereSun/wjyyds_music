@@ -57,7 +57,7 @@ defineExpose({
   display:flex;
   flex-direction:column;
   max-height: 50vh;
-  overflow:scroll;
+  overflow:auto;
   .wjyyds-toast-message-item{
     text-align: center;
     min-width:200px;
