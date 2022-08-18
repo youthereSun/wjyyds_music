@@ -1,6 +1,6 @@
 <template>
     <div class="app-album-cover">
-      <img class="app-play-album-all" @click="playCurrentAlbum" src="../../../assets/images/play.png">
+      <img class="app-play-album-all" @click="playCurrentAlbum" src="../../../assets/images/playAll.png">
       <img class="app-album-cover-img" :src="coverInfo.coverImgUrl">
       <div class="app-album-cover-dec">
         <div class="app-album-cover-name">{{coverInfo.name}}</div>

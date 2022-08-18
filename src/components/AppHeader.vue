@@ -8,7 +8,7 @@
       <a-input class="header-search-input" placeholder="输入搜索" @pressEnter="onSubmitKeyword" :value="keyword" @change="onKeywordChange"/>
     </div>
     <div class="header-login-block">
-      <frown-outlined @click="showAppInfo" class="header-unlogin"/>
+      <github-outlined   @click="showAppInfo" class="header-unlogin"/>
     </div>
 
   </div>
@@ -21,7 +21,7 @@ export default {
 </script>
 <script setup>
 import {ref,onMounted,getCurrentInstance} from 'vue'
-import {LeftOutlined,FrownOutlined, RightOutlined, RobotOutlined} from '@ant-design/icons-vue';
+import {LeftOutlined,FrownOutlined, RightOutlined, RobotOutlined,GithubOutlined} from '@ant-design/icons-vue';
 import {useRouter,useRoute} from 'vue-router'
 const route =useRoute()
 const router = useRouter()
@@ -51,7 +51,7 @@ const showAppInfo=()=>{
     autoClose:false,
     color:'#00BCD4',
     onClose:()=>{
-      console.warn('code by [wjyyds],design by [Jsenny]')
+      window.open("https://github.com/youthereSun/wjyyds_music",'_blank');
     }
   })
 
